@@ -1,0 +1,171 @@
+<!-- 头部 start -->
+
+
+<script>
+
+    $(function () {
+
+        $.ajax({
+            url: "Category/Categorys",
+            type: "post",
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                // console.log(data)
+                /** 获取的数据
+                 * 0: Object { cid: 1, cname: "门票" }
+                 ​
+                 1: Object { cid: 2, cname: "酒店" }
+                 ​
+                 2: Object { cid: 3, cname: "香港车票" }
+                 ​
+                 3: Object { cid: 4, cname: "处境游" }
+                 ​
+                 4: Object { cid: 5, cname: "国内游" }
+                 ​
+                 5: Object { cid: 6, cname: "港澳游" }
+                 ​
+                 6: Object { cid: 7, cname: "抱团定制" }
+                 ​
+                 7: Object { cid: 8, cname: "全球自由行" }
+                 *
+                 * @type {string}
+                 */
+                var topLi = '<li class="nav-active"><a href="index.html">首页</a></li>';
+                for (var i = 0; i < data.length; i++) {
+                    var li = '<li><a href="route_list.html?cid=' + data[i].cid + ' ">' + data[i].cname + '</a></li>';
+                    topLi += li;
+                }
+                topLi += '<li><a href="favoriterank.html">收藏排行榜</a></li>';
+
+                $('.nav').html(topLi)
+            }
+
+        });
+
+
+        $.ajax({
+            url: "user/findOne",
+            type: 'post',
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                /** 获取的数据
+                 *birthday: "1990-11-15"
+                 ​
+                 code: "e2398829c33e4028b1e99b408ed4b3a6"
+                 ​
+                 email: "273218955@qq.com"
+                 ​
+                 name: "李哲"
+                 ​
+                 password: "a7570336"
+                 ​
+                 sex: "男"
+                 ​
+                 status: "Y"
+                 ​
+                 telephone: "13888889999"
+                 ​
+                 uid: 1
+                 ​
+                 username: "q273218955"
+                 */
+                if(data){
+                    var msg = "欢迎回来, " + data.name;
+                    $('#UserMsg').html(msg).css('display', 'inline');
+                    $('#collection').css('display', 'inline');
+                    $('#exit').css('display', 'inline');
+                    $('.login_out a').css('display', 'none')
+                }
+
+            },
+            error: function () {
+
+            }
+        })
+
+
+        $('#exit').click(function () {
+            $.ajax({
+                url: 'user/exit',
+                data: {},
+                type: 'post',
+                dataType: 'json',
+                success: function () {
+
+                },
+                error: function () {
+                    location.href = "index.html"
+                }
+            })
+        });
+
+        $('.search-button').click(function () {
+            var text = $('.search_input').val();
+            var cid = getParameter("cid");
+            location.href = 'http://127.0.0.1/travel/route_list.html?cid=' + cid + '&rname=' + text + '';
+        })
+
+
+    })
+
+</script>
+
+
+<header id="header">
+    <div class="top_banner">
+        <img src="images/top_banner.jpg" alt="">
+    </div>
+    <div class="shortcut">
+        <!-- 未登录状态  -->
+        <div class="login_out">
+            <a href="login.html">登录</a>
+            <a href="register.html">注册</a>
+        </div>
+        <!-- 登录状态  -->
+        <div class="login">
+
+            <span id="UserMsg" style="display: none">欢迎回来，admin</span>
+            <a href="myfavorite.html" id="collection" style="display: none;" class="collection">我的收藏</a>
+            <a style="cursor: pointer;display: none" id="exit" href="javascript:void(0)">退出</a>
+        </div>
+    </div>
+    <div class="header_wrap">
+        <div class="topbar">
+            <div class="logo">
+                <a href="/"><img src="images/logo.jpg" alt=""></a>
+            </div>
+            <div class="search">
+                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                <a href="javascript:void(0);" class="search-button">搜索</a>
+            </div>
+            <div class="hottel">
+                <div class="hot_pic">
+                    <img src="images/hot_tel.jpg" alt="">
+                </div>
+                <div class="hot_tel">
+                    <p class="hot_time">客服热线(9:00-6:00)</p>
+                    <p class="hot_num">400-618-9090</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- 头部 end -->
+<!-- 首页导航 -->
+<div class="navitem">
+    <ul class="nav">
+        <!--<li class="nav-active"><a href="index.html">首页</a></li>-->
+        <!--<li><a href="route_list.html">门票</a></li>-->
+        <!--<li><a href="route_list.html">酒店</a></li>-->
+        <!--<li><a href="route_list.html">香港车票</a></li>-->
+        <!--<li><a href="route_list.html">出境游</a></li>-->
+        <!--<li><a href="route_list.html">国内游</a></li>-->
+        <!--<li><a href="route_list.html">港澳游</a></li>-->
+        <!--<li><a href="route_list.html">抱团定制</a></li>-->
+        <!--<li><a href="route_list.html">全球自由行</a></li>-->
+        <!--<li><a href="favoriterank.html">收藏排行榜</a></li>-->
+    </ul>
+</div>
+    
