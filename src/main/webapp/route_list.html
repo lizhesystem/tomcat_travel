@@ -16,10 +16,12 @@
             // 1.页码展示
             // var serch = location.search;
             // var cid = serch.split("=")[1];
+            // cid得到id数据,rname得到分类名称
             var cid = getParameter("cid");
             var rname = getParameter("rname");
             if (rname) {
                 rname = window.decodeURIComponent(rname);
+                // 把%3Dst%C3%A5格式转成正常的格式
             }
             // 线路展示函数
             load(cid, null, rname);
@@ -110,13 +112,17 @@
                         var li;
 
                         if (data.currentPage == i) {
+                            // 当前页
                             li = '<li class="curPage" onclick="load(' + cid + ',' + i + ',\'' + rname + '\')"><a href="javascript:void(0)">' + i + '</a></li>'
                         } else {
+                            // 其他页，点击继续调用load方法跳转
                             li = '<li  onclick="load(' + cid + ',' + i + ',\'' + rname + '\')"><a href="javascript:void(0)">' + i + '</a></li>'
                         }
+                        // 首页加上页码
                         lis += li;
                     }
 
+                    // 处理下一页和页尾
                     var nextNum = data.currentPage + 1;
                     if (nextNum > data.totalPage) {
                         nextNum = data.totalPage;
@@ -130,7 +136,6 @@
 
 
                     // 列表数据展示
-
                     var route_lis = "";
                     for (var i = 0; i < data.list.length; i++) {
                         var route = data.list[i];

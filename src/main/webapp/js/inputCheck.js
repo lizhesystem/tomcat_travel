@@ -50,6 +50,7 @@ $(function () {
     $('#registerForm').submit(function () {
         // 如果条件都是true代表都满足条件,使用serialize封装数据ajax发送请求
         if (checkusername() && checkpassword() && checkemail() && checktelephone()) {
+            // jQuery的serialize()方法通过序列化表单值,序列号成FirstName=Bill&LastName=Gates格式
             $.post('user/regist', $(this).serialize(), function (data) {
                 if (data.flag) {
                     window.location.href = 'register_ok.html'
